@@ -1,0 +1,29 @@
+
+table{
+    width: 85%;
+    background-color: gray;
+    margin: 80px auto ;
+    border-collapse: collapse ;
+}
+
+td{
+    border: 1px solid black;
+}
+tr{
+    height: 50px;
+    text-align: center;
+}
+.titulo{
+    background-color: rgb(17, 16, 16);
+    color: white;
+    text-align: center;
+}
+
+main h1{
+    text-align: center;
+    align-items: center;
+}
+
+
+
+

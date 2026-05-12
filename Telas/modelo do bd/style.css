@@ -1,0 +1,14 @@
+main{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: url(img/modern-clean-white-background-free-vector.jpg);
+}
+
+main section{
+    background-color: white;
+}
+
+main div{
+    margin: 45px;
+ }

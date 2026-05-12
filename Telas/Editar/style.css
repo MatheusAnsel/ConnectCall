@@ -1,0 +1,82 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;700&display=swap');
+
+body {
+    font-family: 'Roboto', sans-serif;
+    font-size: 20px;
+}
+
+
+main {
+    height: 100%;
+    background-image: url(img/modern-clean-white-background-free-vector.jpg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+
+.formulario {
+    max-width: 700px;
+    box-shadow: 0px 0px 5px 2px #003b71;
+    background-color: white;
+    padding: 3rem;
+    border-radius: 15px;  
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 32px;
+    border-radius: 16px;
+
+}
+
+.campo {
+    display: flex;
+    flex-direction: column;
+    margin: 20px;
+    align-items: center;
+}
+
+.campo input {
+    border: white;
+    margin: 0.6rem 0;
+    padding: 0.8rem 1.2rem;
+    border-radius: 10px;
+    box-shadow: 1px 1px 10px #000000c1;
+
+}
+.campo input:hover {
+    background-color: #eeeeee75;
+    transform: scale(1.1)
+}
+
+.campo input:focus-visible {
+    outline: 3px solid #0170B9;
+}
+
+
+.botao{
+    border: 0;
+    width: 180px;
+    height: 40px;
+    margin: 5px;
+    border-radius: 4px;
+    font-weight: 900;
+    background: linear-gradient(135deg, #2676EF, #40A9F4);
+    color: #ffffff;
+    padding: 8px;
+    cursor: pointer;
+}
+
+.botao:hover{
+    transform: scale(1.1);
+    color: #003b71
+}
+
+.botaodiv{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+

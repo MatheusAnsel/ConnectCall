@@ -1,0 +1,140 @@
+* {
+  margin: 0;
+  padding: 0;
+  outline: 0;
+  border: 0;
+  box-sizing: border-box;
+  font-family: "Open sans", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.login {
+  height: 100vh;
+  background-image: url(img/modern-clean-white-background-free-vector.jpg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffffff;
+  padding: 32px;
+  border-radius: 16px;
+  box-shadow: 0px 0px 5px 2px #003b71;
+  max-width: 256px;
+}
+
+
+
+.form {
+  width: 256px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  margin-top: 16px;
+}
+
+.input-login {
+  margin-bottom: 8px;
+  width: 100%;
+  padding: 8px 0 8px 32px;
+  border: 1px solid #dddddd;
+  border-radius: 4px;
+}
+
+
+.input-password {
+  width: 100%;
+  padding: 8px 0 8px 32px;
+  border: 1px solid #dddddd;
+  border-radius: 4px;
+}
+
+.label-login {
+  margin: 0 0 -12px 0;
+  color: #333333;
+  font-weight: 600;
+}
+
+.label-password {
+  margin: 0 0 -12px 0;
+  color: #333333;
+  font-weight: 600;
+}
+
+.form i {
+  color: #999999;
+  font-size: 16px;
+  transform: translateX(10px) translateY(28px);
+}
+
+.input-login::placeholder {
+  font-size: 12px;
+  color: #999999;
+}
+
+.input-password::placeholder {
+  font-size: 12px;
+  color: #999999;
+}
+
+.input-login:focus {
+  border: 3px solid #2676EF;
+}
+
+.input-password:focus {
+  border: 3px solid #2676EF;
+}
+
+.link {
+  color: #2676EF;
+  margin: 8px 0 8px 0;
+  cursor: pointer;
+}
+
+.link:hover {
+  color: #1757B9;
+}
+
+.button {
+  width: 100%;
+  margin: 5px;
+  border-radius: 4px;
+  font-weight: 600;
+  background: linear-gradient(135deg, #2676EF, #40A9F4);
+  color: #ffffff;
+  padding: 8px;
+  cursor: pointer;
+}
+
+.button:hover {
+  transform: scale(1.1);
+  
+}
+
+
+.container h1::after {
+  content: '';
+  display: block;
+  width: 6rem;
+  height: 0.3rem;
+  background-color: #0170B9;
+  margin: 0 auto;
+  position: absolute;
+  border-radius: 15px;
+}
+
+.container h1{
+  font-style: italic;
+  font-size: 32px;
+  margin-bottom: 20px;
+
+
+}
