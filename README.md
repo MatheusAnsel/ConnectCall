@@ -10,14 +10,20 @@ O projeto foi desenvolvido com foco em organização estrutural, integração ba
 
 A aplicação encontra-se publicada em ambiente cloud utilizando serviços da AWS.
 
+O projeto foi publicado anteriormente em infraestrutura cloud da AWS para fins de demonstração e testes.
+
+## Acesso ao Projeto
+https://telecallpizzanet.s3.us-east-1.amazonaws.com/Pagina+principal/index.html
+
+> Observação: o deploy na AWS está mantido apenas para demonstração, devido aos custos recorrentes da infraestrutura cobrados em dólar.
+
 ## Infraestrutura Utilizada
 
 - AWS EC2
 - Apache
 - PHP
 - MySQL
-- Linux Server
-
+  
 ---
 
 # Tecnologias Utilizadas
