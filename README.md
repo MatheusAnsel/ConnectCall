@@ -99,7 +99,7 @@ O projeto foi estruturado utilizando separação modular de responsabilidades, p
 ## 1. Clone o repositório
 
 ```bash
-git clone https://github.com/seuusuario/telecall-project.git
+git clone https://github.com/seuusuario/telecall.git
 ```
 
 ---
@@ -143,7 +143,7 @@ BD/bdtelecall.sql
 ## 5. Execute
 
 ```bash
-http://localhost/telecall-project
+http://localhost/telecall
 ```
 
 ---
