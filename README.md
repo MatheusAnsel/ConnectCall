@@ -175,8 +175,8 @@ Boas práticas recomendadas para produção:
 
 # Autor
 
-Matheus Ansel e Lucas Rozeno
+Matheus Ansel 
 
 - GitHub: https://github.com/MatheusAnsel
 - LinkedIn: https://linkedin.com/in/MatheusAnsel
-- GitHub: https://github.com/LucasRozeno7
+
