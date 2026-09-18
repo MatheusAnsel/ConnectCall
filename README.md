@@ -14,7 +14,7 @@
 
 ## Sobre o projeto
 
-O Telecall nasceu como projeto acadêmico (PHP + MySQL, comunicação empresarial: SMS programável, geração de PDF, cadastro/login). Meses depois, revisitei o código com outro olhar — o de quem já entende os riscos reais de uma aplicação web — e conduzi uma **auditoria e remediação completa de segurança**, documentada abaixo.
+O Telecall nasceu como projeto acadêmico em grupo (PHP + MySQL, comunicação empresarial: SMS programável, geração de PDF, cadastro/login). Meses depois, revisitei o código sozinho, já com outro olhar — o de quem entende os riscos reais de uma aplicação web — e conduzi uma **auditoria e remediação completa de segurança**, documentada abaixo.
 
 ### O que foi encontrado e corrigido
 
