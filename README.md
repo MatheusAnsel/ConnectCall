@@ -1,182 +1,82 @@
-# Telecall Project
+<div align="center">
 
-Aplicação web corporativa desenvolvida para demonstração de serviços de comunicação empresarial e integração digital, utilizando PHP, MySQL e arquitetura web modular.
+# Telecall / ConnectCall
 
-O projeto foi desenvolvido com foco em organização estrutural, integração backend/frontend, manipulação de dados e deploy em ambiente cloud AWS.
+**Aplicação corporativa de comunicação** — projeto acadêmico revisitado e submetido a uma auditoria completa de segurança.
 
----
+[![PHP](https://img.shields.io/badge/PHP-777BB4?style=flat-square&logo=php&logoColor=white)](#)
+[![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=flat-square&logo=mysql&logoColor=white)](#)
+[![AWS](https://img.shields.io/badge/AWS-232F3E?style=flat-square&logo=amazonaws&logoColor=white)](#)
 
-# Deploy
-
-A aplicação encontra-se publicada em ambiente cloud utilizando serviços da AWS.
-
-O projeto foi publicado anteriormente em infraestrutura cloud da AWS para fins de demonstração e testes.
-
-## Acesso ao Projeto
-https://telecallpizzanet.s3.us-east-1.amazonaws.com/Pagina+principal/index.html
-
-> Observação: o deploy na AWS está mantido apenas para demonstração, devido aos custos recorrentes da infraestrutura cobrados em dólar.
-
-## Infraestrutura Utilizada
-
-- AWS EC2
-- Apache
-- PHP
-- MySQL
-  
----
-
-# Tecnologias Utilizadas
-
-## Backend
-- PHP
-
-## Frontend
-- HTML5
-- CSS3
-- JavaScript
-
-## Banco de Dados
-- MySQL
-- SQL
-
-## Cloud & Deploy
-- AWS EC2
-- Apache Server
-- Linux
-
-## Bibliotecas
-- DOMPDF
-
-## Ferramentas
-- Git
-- GitHub
+</div>
 
 ---
 
-# Funcionalidades
+## Sobre o projeto
 
-- Sistema web institucional
-- Navegação dinâmica entre páginas
-- Integração com banco de dados
+O Telecall nasceu como projeto acadêmico (PHP + MySQL, comunicação empresarial: SMS programável, geração de PDF, cadastro/login). Meses depois, revisitei o código com outro olhar — o de quem já entende os riscos reais de uma aplicação web — e conduzi uma **auditoria e remediação completa de segurança**, documentada abaixo.
+
+### O que foi encontrado e corrigido
+
+| Vulnerabilidade encontrada | Correção aplicada |
+|---|---|
+| Consultas SQL montadas por concatenação de string | Migrado para **prepared statements** (mysqli) em todo o cadastro, login, edição e exclusão de dados |
+| Senhas armazenadas em texto puro | Hash com **bcrypt** (`password_hash` / `password_verify`) |
+| Credenciais de banco versionadas no código | Removidas do histórico; `config.php` documentado para uso de variáveis de ambiente em produção |
+| Falhas de controle de sessão | Revisão do fluxo de login/logout e checagem de sessão nas páginas protegidas |
+| Possível IDOR (acesso a registros de outros usuários via ID na URL) | Validação de propriedade do recurso antes de editar/excluir |
+
+## Deploy
+
+A aplicação foi publicada em ambiente cloud AWS (EC2 + Apache) para fins de demonstração:
+
+**https://telecallpizzanet.s3.us-east-1.amazonaws.com/Pagina+principal/index.html**
+
+> O deploy é mantido apenas para demonstração, por conta do custo recorrente da infraestrutura.
+
+## Stack
+
+**Backend:** PHP · **Banco:** MySQL · **Frontend:** HTML5, CSS3, JavaScript · **Cloud:** AWS EC2, Apache · **Libs:** DOMPDF
+
+## Funcionalidades
+
+- Cadastro e login de usuários (senha com hash bcrypt)
+- Edição e exclusão de dados com verificação de propriedade do recurso
+- Geração dinâmica de PDF (DOMPDF)
 - Sistema de SMS programável
-- Geração dinâmica de PDF
-- Estrutura modular em PHP
-- Organização de assets e páginas
-- Deploy em infraestrutura cloud
+- Estrutura modular, separando páginas, PDF e SMS em módulos próprios
 
----
+## Estrutura
 
-# Arquitetura do Projeto
-
-```bash
+```
 BD/
- └── bdtelecall.sql
+ └── bdtelecall.sql        # schema do banco
 
 Telas/
+ ├── config.php            # conexão com o banco (env vars documentadas p/ produção)
+ ├── Tela de login/
+ ├── Tela de cadastro/
+ ├── Editar/
  ├── PDF/
  ├── smsprogramavel/
- ├── assets/
- └── paginas/
+ └── assets/
 ```
 
----
-
-# Estrutura Técnica
-
-O projeto foi estruturado utilizando separação modular de responsabilidades, permitindo:
-
-- Escalabilidade
-- Melhor manutenção
-- Organização de componentes
-- Separação entre backend e frontend
-- Facilidade de deploy e atualização
-
----
-
-# Como Executar Localmente
-
-## 1. Clone o repositório
+## Como executar localmente
 
 ```bash
-git clone https://github.com/seuusuario/telecall.git
+git clone https://github.com/MatheusAnsel/ConnectCall.git
 ```
 
----
+1. Instale **XAMPP** ou **Laragon**
+2. Mova a pasta do projeto para `htdocs`
+3. Abra o phpMyAdmin e importe `BD/bdtelecall.sql`
+4. Ajuste `Telas/config.php` com as credenciais do seu banco local
+5. Acesse `http://localhost/ConnectCall`
 
-## 2. Configure ambiente local
+## Autor
 
-Instale:
+**Matheus Ansel**
 
-- XAMPP
-ou
-- Laragon
-
----
-
-## 3. Configure o projeto
-
-Mova a pasta para:
-
-```bash
-htdocs
-```
-
----
-
-## 4. Configure o banco de dados
-
-Abra o:
-
-```bash
-phpMyAdmin
-```
-
-Importe:
-
-```bash
-BD/bdtelecall.sql
-```
-
----
-
-## 5. Execute
-
-```bash
-http://localhost/telecall
-```
-
----
-
-# Diferenciais Técnicos
-
-- Deploy realizado na AWS
-- Estrutura modular em PHP
-- Integração MySQL
-- Sistema web funcional
-- Manipulação dinâmica de PDFs
-- Organização escalável de arquivos
-- Aplicação preparada para ambiente cloud
-
-
-
-# Segurança
-
-Boas práticas recomendadas para produção:
-
-- Variáveis de ambiente `.env`
-- Proteção contra SQL Injection
-- HTTPS
-- Validação de entradas
-- Controle de autenticação
-- Backup automatizado
-
----
-
-# Autor
-
-Matheus Ansel 
-
-- GitHub: https://github.com/MatheusAnsel
-- LinkedIn: https://linkedin.com/in/MatheusAnsel
-
+- GitHub: [@MatheusAnsel](https://github.com/MatheusAnsel)
+- LinkedIn: [linkedin.com/in/matheusansel](https://linkedin.com/in/matheusansel)
