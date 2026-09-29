@@ -57,7 +57,7 @@ Telas/
  ├── Tela de login/
  ├── Tela de cadastro/
  ├── Editar/
- ├── PDF/
+ ├── PDF/                  # geração de PDF (dependências via Composer em PDF/dompdf)
  ├── smsprogramavel/
  └── assets/
 ```
@@ -70,9 +70,13 @@ git clone https://github.com/MatheusAnsel/ConnectCall.git
 
 1. Instale **XAMPP** ou **Laragon**
 2. Mova a pasta do projeto para `htdocs`
-3. Abra o phpMyAdmin e importe `BD/bdtelecall.sql`
-4. Ajuste `Telas/config.php` com as credenciais do seu banco local
-5. Acesse `http://localhost/ConnectCall`
+3. Instale as dependências do PDF (requer [Composer](https://getcomposer.org)):
+   ```bash
+   cd Telas/PDF/dompdf && composer install
+   ```
+4. Abra o phpMyAdmin e importe `BD/bdtelecall.sql`
+5. Ajuste `Telas/config.php` com as credenciais do seu banco local
+6. Acesse `http://localhost/ConnectCall`
 
 ## Autor
 

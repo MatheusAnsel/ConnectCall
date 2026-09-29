@@ -4,7 +4,6 @@
 --   • usuario VARCHAR(30) — limite mais realista
 --   • FK idusuarios em dados vincula ao usuário dono do registro
 --   • Senhas dos usuários de teste convertidas para hash bcrypt
---     (senha original: testeeee / pppppppp / etc.)
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -26,10 +25,9 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Usuários de teste (senhas hasheadas com bcrypt)
--- Senha original de cada um está no comentário ao lado
 INSERT INTO `usuarios` (`idusuarios`, `usuario`, `senha`, `tipo`) VALUES
-(1,  'testee', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 0), -- senha: password (troque antes de usar!)
-(4,  'adminn', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 1); -- senha: password (troque antes de usar!)
+(1,  'testee', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 0),
+(4,  'adminn', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 1);
 
 -- ATENÇÃO: Antes de colocar em produção, crie novos usuários pelo cadastro
 -- para que tenham senhas próprias geradas via password_hash().
