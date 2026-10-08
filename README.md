@@ -7,6 +7,7 @@
 [![PHP](https://img.shields.io/badge/PHP-777BB4?style=flat-square&logo=php&logoColor=white)](#)
 [![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=flat-square&logo=mysql&logoColor=white)](#)
 [![AWS](https://img.shields.io/badge/AWS-232F3E?style=flat-square&logo=amazonaws&logoColor=white)](#)
+[![CI](https://github.com/MatheusAnsel/ConnectCall/actions/workflows/ci.yml/badge.svg)](https://github.com/MatheusAnsel/ConnectCall/actions/workflows/ci.yml)
 
 </div>
 
@@ -77,6 +78,18 @@ git clone https://github.com/MatheusAnsel/ConnectCall.git
 4. Abra o phpMyAdmin e importe `BD/bdtelecall.sql`
 5. Ajuste `Telas/config.php` com as credenciais do seu banco local
 6. Acesse `http://localhost/ConnectCall`
+
+## Verificação automática (CI)
+
+O workflow em `.github/workflows/ci.yml` roda a cada push e pull request e protege o que a auditoria corrigiu:
+
+- **Sintaxe** de todos os arquivos PHP próprios (o dompdf, de terceiros, fica de fora).
+- **Nenhum SQL montado por concatenação**: a build falha se aparecer `query()` direta ou uma consulta com variável interpolada. Toda consulta deve usar `prepare()` com parâmetros.
+- **Nenhuma credencial no repositório**: falha se um `.env` for versionado ou se a senha do banco for escrita em `Telas/config.php`.
+- **O dump do banco** (`BD/bdtelecall.sql`) importa em um MariaDB limpo e cria as tabelas `dados` e `usuarios`, com a coluna da senha grande o bastante para um hash.
+- **Fumaça**: as telas de login, cadastro e página principal respondem 200 no servidor embutido do PHP.
+
+O projeto não tem testes automatizados de comportamento (login, cadastro e edição ainda não são exercitados de ponta a ponta).
 
 ## Autor
 

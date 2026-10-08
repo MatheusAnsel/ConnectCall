@@ -1,0 +1,113 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  php:
+    name: PHP, SQL e banco
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    # MariaDB porque o projeto roda em XAMPP/Laragon e o dump foi gerado por ele.
+    services:
+      mariadb:
+        image: mariadb:11
+        env:
+          MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: "1"
+          MARIADB_DATABASE: bdtelecall
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd "healthcheck.sh --connect --innodb_initialized"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 12
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.3"
+          extensions: mysqli
+          tools: none
+
+      # O dompdf é uma biblioteca de terceiros e fica de fora das verificações do código próprio.
+      - name: Sintaxe de todos os arquivos PHP próprios
+        run: |
+          status=0
+          while IFS= read -r -d '' f; do
+            if ! php -l "$f" >/dev/null; then
+              echo "::error file=$f::erro de sintaxe"
+              status=1
+            fi
+          done < <(git ls-files -z '*.php' | grep -zv 'dompdf/')
+          exit $status
+
+      # Trava contra a regressão que o README diz ter corrigido: SQL montado por concatenação.
+      # Toda consulta deve usar prepare() com parâmetros.
+      - name: Nenhum SQL montado por concatenação
+        run: |
+          padrao='(SELECT[[:space:]].*[[:space:]]FROM|INSERT[[:space:]]+INTO|UPDATE[[:space:]]+[^[:space:]]+[[:space:]]+SET|DELETE[[:space:]]+FROM).*\$[A-Za-z_]|(->|::)(query|multi_query|real_query)\(|mysqli_(query|multi_query|real_query)\('
+          achados=$(git ls-files -z '*.php' | grep -zv 'dompdf/' | xargs -0 grep -nEi "$padrao" || true)
+          if [ -n "$achados" ]; then
+            echo "$achados"
+            echo "::error::SQL com variável interpolada ou query() direta. Use prepare() com parâmetros."
+            exit 1
+          fi
+
+      - name: Nenhuma credencial no repositório
+        run: |
+          if git ls-files | grep -E '(^|/)\.env(\..+)?$' | grep -q .; then
+            echo "::error::um arquivo .env está versionado"; exit 1
+          fi
+          if grep -nE "^\s*\\\$dbPassword\s*=\s*['\"][^'\"]+['\"]" Telas/config.php; then
+            echo "::error::senha de banco escrita no código (Telas/config.php)"; exit 1
+          fi
+
+      - name: O dump do banco importa e cria as tabelas esperadas
+        run: |
+          mysql -h 127.0.0.1 -uroot bdtelecall < BD/bdtelecall.sql
+          tabelas=$(mysql -h 127.0.0.1 -uroot -N -e "SELECT table_name FROM information_schema.tables WHERE table_schema='bdtelecall' ORDER BY 1")
+          echo "$tabelas"
+          [ "$tabelas" = "$(printf 'dados\nusuarios')" ]
+          # a coluna da senha precisa comportar um hash (bcrypt tem 60 caracteres)
+          tam=$(mysql -h 127.0.0.1 -uroot -N -e "SELECT character_maximum_length FROM information_schema.columns WHERE table_schema='bdtelecall' AND table_name='usuarios' AND column_name='senha'")
+          [ "$tam" -ge 60 ]
+
+      - name: As telas principais respondem (servidor embutido do PHP)
+        run: |
+          php -S 127.0.0.1:8000 -t . >/tmp/php.log 2>&1 &
+          servidor=$!
+          # espera o servidor aceitar conexões (até 10 s) em vez de depender de um sleep fixo
+          for i in $(seq 1 20); do
+            curl -s -o /dev/null http://127.0.0.1:8000/ && break
+            sleep 0.5
+          done
+
+          falhou=0
+          for tela in "Tela%20de%20login/login.php" "Tela%20de%20cadastro/Cadastro.php" "Pagina%20principal/index.php"; do
+            codigo=$(curl -s -o /tmp/pagina.html -w '%{http_code}' "http://127.0.0.1:8000/Telas/$tela")
+            formularios=$(grep -ci '<form' /tmp/pagina.html || true)
+            # Erros do PHP aparecem dentro do HTML da própria tela. O log do servidor não serve para
+            # isso: a inicialização do PHP no runner já escreve avisos nele (ex.: módulo já carregado).
+            erros_php=$(grep -ciE '(Fatal error|Parse error|Warning|Notice|Deprecated)(</b>)?:' /tmp/pagina.html || true)
+            echo "$tela -> HTTP $codigo, $formularios formulário(s), $erros_php erro(s) do PHP"
+            if [ "$codigo" != "200" ] || [ "$formularios" -lt 1 ] || [ "$erros_php" -gt 0 ]; then
+              echo "::error::tela $tela não respondeu como esperado"
+              head -c 600 /tmp/pagina.html; echo
+              falhou=1
+            fi
+          done
+
+          echo "--- log do servidor PHP:"
+          cat /tmp/php.log
+          kill "$servidor" 2>/dev/null || true
+          exit $falhou
