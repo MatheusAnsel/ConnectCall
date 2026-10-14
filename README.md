@@ -43,8 +43,10 @@ A aplicação foi publicada em ambiente cloud AWS (EC2 + Apache) para fins de de
 
 - Cadastro e login de usuários (senha com hash bcrypt)
 - Edição e exclusão de dados com verificação de propriedade do recurso
+- Alteração de senha (a nova senha também é gravada com hash bcrypt)
 - Geração dinâmica de PDF (DOMPDF)
 - Sistema de SMS programável
+- Páginas institucionais dos produtos de comunicação: SMS programável, 2FA, CPaaS e Google Verified Calls
 - Estrutura modular, separando páginas, PDF e SMS em módulos próprios
 
 ## Estrutura
@@ -58,9 +60,11 @@ Telas/
  ├── Tela de login/
  ├── Tela de cadastro/
  ├── Editar/
+ ├── Alterar Senha/        # troca de senha
  ├── PDF/                  # geração de PDF (dependências via Composer em PDF/dompdf)
  ├── smsprogramavel/
- └── assets/
+ ├── 2fa/, cpaas/, gvc/    # páginas dos produtos (2FA, CPaaS, Google Verified Calls)
+ └── nav/, footer/, img/   # componentes e imagens compartilhados
 ```
 
 ## Como executar localmente
