@@ -13,6 +13,17 @@
 
 ---
 
+## Telas
+
+| | |
+|---|---|
+| ![Página principal com banners de serviços](docs/screenshots/home.png) | ![Página explicando autenticação de dois fatores](docs/screenshots/2fa.png) |
+| Página principal | Conteúdo sobre autenticação de dois fatores (2FA) |
+| ![Página explicando CPaaS](docs/screenshots/cpaas.png) | |
+| Conteúdo sobre CPaaS | |
+
+As páginas que dependem de login e do banco de dados (cadastro, edição, PDF, SMS programável) não aparecem aqui porque exigem o MySQL em execução.
+
 ## Sobre o projeto
 
 O Telecall nasceu como projeto acadêmico em grupo (PHP + MySQL, comunicação empresarial: SMS programável, geração de PDF, cadastro/login). Meses depois, revisitei o código sozinho, já com outro olhar — o de quem entende os riscos reais de uma aplicação web — e conduzi uma **auditoria e remediação completa de segurança**, documentada abaixo.
